@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Answer Check</title>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+      }
+
+      #back {
+        width: 100vw;
+        height: 100vh;
+        padding-top: 35vh;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+
+      #what {
+        font-size: 5vw;
+        text-align: center;
+      }
+
+      #inlineResultText {
+        text-align: center;
+      }
+
+      #answerForm {
+        text-align: center;
+        padding-top: 68px;
+        margin: auto;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 80px;
+      }
+
+      #userAnswer {
+        width: 390px;
+        height: 35px;
+        background-color:rgba(220, 246, 252) ;
+        border-color: rgba(0,0,0,0);
+      }
+
+      #sendAnswer {
+        width: 70px;
+        height: 45px;
+        font-size: 17px;
+        background-color: rgb(0, 132, 255);
+        border-color: rgba(0,0,0,0);
+        border-radius: 7px;
+        color: white;
+        box-shadow: .5px .5px .5px .5px rgba(0,0,0,0.3);
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="back">
+    <form id="answerForm">
+      <input type="text" id="userAnswer" name="userAnswer" />
+      <input type="submit" value="送信" id="sendAnswer" />
+    </form>
+    <p id="inlineResultText" style="display: none"></p>
+
+    <div class="modal" id="resultModal">
+      <div class="modal-content">
+        <p id="resultText"></p>
+        <button onclick="hideModal()">閉じる</button>
+      </div>
+    </div>
+  </div>
+
+    <script>
+      const form = document.getElementById("answerForm");
+      const userAnswer = document.getElementById("userAnswer");
+      const resultModal = document.getElementById("resultModal");
+      const resultText = document.getElementById("resultText");
+      const inlineResultText = document.getElementById("inlineResultText");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        if (userAnswer.value === "あんさー" || userAnswer.value === "アンサー" || userAnswer.value === "Answer" || userAnswer.value === "ANSWER" || userAnswer.value === "answer") {
+          resultText.innerHTML = "正解!";
+          inlineResultText.innerHTML = "正解!";
+          inlineResultText.style.display = "block";
+        } else {
+          resultText.textContent = "不正解。もう一度お試しください。";
+          inlineResultText.textContent = ""; // 不正解時に直下のテキストは表示しない
+          inlineResultText.style.display = "none";
+        }
+        showModal();
+      });
+
+      function showModal() {
+        resultModal.style.display = "flex";
+      }
+
+      function hideModal() {
+        resultModal.style.display = "none";
+      }
+
+      resultModal.addEventListener("click", function (event) {
+        if (event.target === resultModal) {
+          hideModal();
+        }
+      });
+    </script>
+  </body>
+</html>
